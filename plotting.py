@@ -18,6 +18,6 @@ def cmap_colors(n_colors,cmap='viridis'):
     cmap     : colormap to choose from. Default is viridis.
     """
     cmap = plt.cm.get_cmap(lut = n_colors)
-    colors = [ rgb2hex(c(i)[:3]) for i  in range(n_colors)]
+    colors = [ rgb2hex(cmap(i)[:3]) for i  in range(n_colors)]
     # Convert RGB to Hex Value, and return an array.
     return colors
