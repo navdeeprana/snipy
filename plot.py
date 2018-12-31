@@ -13,15 +13,16 @@ def no_ticks(ax,axis='both'):
     if axis=='both' or axis == 'y':
         ax.get_yaxis().set_visible(False)
 
-def cmap_colors(n_colors,cmap='viridis'):
+def cmap_colors(n_colors,alpha = 1.0,cmap='viridis'):
     """
     Get colors from matplotlib colormap.
     n_colors : number of colors to draw.
+    alpha    : alpha value.
     cmap     : colormap to choose from. Default is viridis.
     """
     cmap = plt.cm.get_cmap(name=cmap,lut = n_colors)
-    colors = [ rgb2hex(cmap(i)[:3]) for i  in range(n_colors)]
-    # Convert RGB to Hex Value, and return an array.
+    colors = [(cmap(i)[0],cmap(i)[1],cmap(i)[2],alpha) for i in range(n_colors)]
+    # Set corresponding alpha value and return an array.
     return colors
 
 class OOMFormatter(ScalarFormatter):
