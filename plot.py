@@ -8,10 +8,17 @@ def no_ticks(ax,axis='both'):
     ax   : matplotlib ax object.
     axis : "both", "x", "y"
     """
-    if axis=='both' or axis == 'x':
-        ax.get_xaxis().set_visible(False)
-    if axis=='both' or axis == 'y':
-        ax.get_yaxis().set_visible(False)
+    import numpy as np
+    def set(ax):
+        if axis=='both' or axis == 'x':
+            ax.get_xaxis().set_visible(False)
+        if axis=='both' or axis == 'y':
+            ax.get_yaxis().set_visible(False)
+    if type(ax) == np.ndarray :
+        for axi in ax:
+            set(axi)
+    else:
+        set(ax)
 
 def cmap_colors(n_colors,alpha = 1.0,cmap='viridis'):
     """
