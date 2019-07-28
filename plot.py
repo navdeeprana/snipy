@@ -1,7 +1,12 @@
 import matplotlib
 from matplotlib import pyplot as plt
-from matplotlib.colors import rgb2hex
-from matplotlib.ticker import ScalarFormatter
+
+def mt(string):
+    """
+    Convert a string for math use.
+    """
+    return r'$%s$'%string
+
 def no_ticks(ax,axis='both'):
     """
     Remove ticks and labels from one or both axis.
@@ -27,26 +32,31 @@ def cmap_colors(n_colors,alpha = 1.0,cmap='viridis'):
     alpha    : alpha value.
     cmap     : colormap to choose from. Default is viridis.
     """
+    
+    from matplotlib.colors import rgb2hex
     cmap = plt.cm.get_cmap(name=cmap,lut = n_colors)
     colors = [(cmap(i)[0],cmap(i)[1],cmap(i)[2],alpha) for i in range(n_colors)]
     # Set corresponding alpha value and return an array.
     return colors
 
-class OOMFormatter(ScalarFormatter):
+def add_colorbar(fig,ax,im,contours=False):
     """
-    Shamelessly copied from stack overflow.
-    Set custom Formatter.
-    order    : Order which appears on the top as multiplier.
-    fformat  : Float Format
-    mathtext : Use mathtext if possible.
+    Add a colorbar to the image.
     """
-    def __init__(self, order=0, fformat="%1.1f", offset=True, mathText=True):
-        self.oom = order
-        self.fformat = fformat
-        ScalarFormatter.__init__(self,useOffset=offset,useMathText=mathText)
-    def _set_orderOfMagnitude(self, nothing):
-        self.orderOfMagnitude = self.oom
-    def _set_format(self, vmin, vmax):
-        self.format = self.fformat
-        if self._useMathText:
-            self.format = '$%s$' % matplotlib.ticker._mathdefault(self.format) 
+    from mpl_toolkits.axes_grid1 import make_axes_locatable
+    cax = make_axes_locatable(ax).append_axes('right',size='5%',pad=0.05)
+    cax.tick_params(axis='y',which='minor',bottom=False)
+        
+    if contours:
+        norm = matplotlib.colors.Normalize(vmin=cs.cvalues.min(),vmax=cs.cvalues.max())
+        sm   = plt.cm.ScalarMappable(norm=norm,cmap=cs.cmap)
+        sm.set_array([])
+        fig.colorbar(sm,cax=cax,orientation='vertical') 
+    else:
+        fig.colorbar(im,cax=cax,orientation='vertical') 
+
+    for t in cax.get_yticklabels():
+        t.set_horizontalalignment('right')
+        t.set_verticalalignment('center')
+        t.set_x(4)
+    return cax
