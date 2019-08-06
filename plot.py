@@ -39,7 +39,7 @@ def cmap_colors(n_colors,alpha = 1.0,cmap='viridis'):
     # Set corresponding alpha value and return an array.
     return colors
 
-def add_colorbar(fig,ax,im,contours=False):
+def ax_colorbar(fig,ax,im,contours=False):
     """
     Add a colorbar to the image.
     """
@@ -48,8 +48,8 @@ def add_colorbar(fig,ax,im,contours=False):
     cax.tick_params(axis='y',which='minor',bottom=False)
         
     if contours:
-        norm = matplotlib.colors.Normalize(vmin=cs.cvalues.min(),vmax=cs.cvalues.max())
-        sm   = plt.cm.ScalarMappable(norm=norm,cmap=cs.cmap)
+        norm = matplotlib.colors.Normalize(vmin=im.cvalues.min(),vmax=im.cvalues.max())
+        sm   = plt.cm.ScalarMappable(norm=norm,cmap=im.cmap)
         sm.set_array([])
         fig.colorbar(sm,cax=cax,orientation='vertical') 
     else:
@@ -60,3 +60,21 @@ def add_colorbar(fig,ax,im,contours=False):
         t.set_verticalalignment('center')
         t.set_x(4)
     return cax
+
+def fig_colorbar(fig,cax,im,contours=False):
+    """
+    Add a colorbar to the figure.
+    """
+    cax.tick_params(axis='y',which='minor',bottom=False)
+    if contours:
+        norm = matplotlib.colors.Normalize(vmin=im.cvalues.min(),vmax=im.cvalues.max())
+        sm   = plt.cm.ScalarMappable(norm=norm,cmap=im.cmap)
+        sm.set_array([])
+        fig.colorbar(sm,cax=cax,orientation='vertical') 
+    else:
+        fig.colorbar(im,cax=cax,orientation='vertical') 
+    return cax
+
+def ax_text(ax,x,y,text,fontsize):
+    ax.text(x,y,text,verticalalignment='center',horizontalalignment='center',
+          transform=ax.transAxes,fontsize=fontsize)
