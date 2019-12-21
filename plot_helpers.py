@@ -1,12 +1,6 @@
 import matplotlib
 from matplotlib import pyplot as plt
 
-def mt(string):
-    """
-    Convert a string for math use.
-    """
-    return r'$%s$'%string
-
 def no_ticks(ax,axis='both'):
     """
     Remove ticks and labels from one or both axis.
@@ -24,6 +18,9 @@ def no_ticks(ax,axis='both'):
             set(axi)
     else:
         set(ax)
+
+def default_colors():
+    return plt.rcParams['axes.prop_cycle'].by_key()['color']
 
 def cmap_colors(n_colors,alpha = 1.0,cmap='viridis'):
     """
@@ -78,3 +75,8 @@ def fig_colorbar(fig,cax,im,contours=False):
 def ax_text(ax,x,y,text,fontsize):
     ax.text(x,y,text,verticalalignment='center',horizontalalignment='center',
           transform=ax.transAxes,fontsize=fontsize)
+
+def set_formatter(axis,l,r):
+    form = matplotlib.ticker.ScalarFormatter()
+    form.set_powerlimits((l,r))
+    axis.set_major_formatter(form)
