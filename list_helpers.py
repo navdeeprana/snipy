@@ -46,7 +46,7 @@ def list_log_spaced(list_):
     list__ = []
     for l in list_ :
         indices = spacing[np.where(spacing < len(l))]
-        out.append(l[indices])
+        list__.append(l[indices])
     return list__
 
 def list_pairwise_dict(list_1, list_2):
