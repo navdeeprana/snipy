@@ -48,3 +48,10 @@ def list_log_spaced(list_):
         indices = spacing[np.where(spacing < len(l))]
         out.append(l[indices])
     return list__
+
+def list_pairwise_dict(list_1, list_2):
+    dict_ = {}
+    for l1,l2 in zip(list_1,list_2):
+        dict_[l1] = l2
+    return dict_
+
