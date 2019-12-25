@@ -72,9 +72,9 @@ def fig_colorbar(fig,cax,im,contours=False):
         fig.colorbar(im,cax=cax,orientation='vertical') 
     return cax
 
-def ax_text(ax,x,y,text,fontsize):
+def ax_text(ax,x,y,text,**kwargs):
     ax.text(x,y,text,verticalalignment='center',horizontalalignment='center',
-          transform=ax.transAxes,fontsize=fontsize)
+          transform=ax.transAxes,**kwargs)
 
 def set_formatter(axis,l,r):
     form = matplotlib.ticker.ScalarFormatter()
