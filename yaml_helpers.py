@@ -7,7 +7,7 @@ def read_yaml(filename):
 
 def write_yaml(filename,data):
     with open(filename,'w') as f:
-        yaml.dump(data,f,indent=True)
+        yaml.dump(data,f,default_flow_style=False,indent=True)
 
 def collate_yaml_keywords(data,keys):
     collated = []
