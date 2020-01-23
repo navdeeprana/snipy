@@ -80,3 +80,8 @@ def set_formatter(axis,l,r):
     form = matplotlib.ticker.ScalarFormatter()
     form.set_powerlimits((l,r))
     axis.set_major_formatter(form)
+
+def search_rcParams(key):
+    for name,value in plt.rcParams.items():
+        if key in name:
+            print(name,value)

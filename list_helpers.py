@@ -15,7 +15,8 @@ def list_np(list_):
     """
     list__ = []
     for l in list_:
-        list__.append(np.asarray(l))
+        if T: list__.append(np.asarray(l).T)
+        else: list__.append(np.asarray(l))
     return list__
 
 def list_mean(list_):
