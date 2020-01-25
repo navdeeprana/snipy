@@ -11,8 +11,8 @@ def fit_line(x,y):
     popt,pcov = curve_fit(line,x,y)
     return popt, np.sqrt(np.diag(pcov))
 
-def fit_gaussian(x,y):
-    popt,pcov = curve_fit(gaussian,x,y)
+def fit_gaussian(x,y,**kwargs):
+    popt,pcov = curve_fit(gaussian,x,y,**kwargs)
     return popt, np.sqrt(np.diag(pcov))
 
 def fit_function(x,y,function):
