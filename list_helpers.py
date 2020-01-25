@@ -9,7 +9,7 @@ def list_append_list(list_1,list_2):
     for l1,l2 in zip(list_1,list_2):
         l1.append(l2)
         
-def list_np(list_):
+def list_np(list_,T=False):
     """
     Convert to numpy
     """
