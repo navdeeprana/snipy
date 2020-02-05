@@ -1,6 +1,9 @@
 # Define few list helper functions.
 import numpy as np
 
+def list_apply_fun(list_,function):
+    return [function(l) for l in list_]
+
 def list_append_list(list_1,list_2):
     """
     Given two lists of lists list_1 and list_2,
