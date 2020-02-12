@@ -7,15 +7,15 @@ def line(x,a,b):
 def gaussian(x,A,mu,sigma):
     return (A/(np.sqrt(2*np.pi)*sigma))*np.exp(-0.5e0*((x-mu)/sigma)**2)
 
-def fit_line(x,y):
-    popt,pcov = curve_fit(line,x,y)
+def fit_line(x,y,**kwargs):
+    popt,pcov = curve_fit(line,x,y,**kwargs)
     return popt, np.sqrt(np.diag(pcov))
 
 def fit_gaussian(x,y,**kwargs):
     popt,pcov = curve_fit(gaussian,x,y,**kwargs)
     return popt, np.sqrt(np.diag(pcov))
 
-def fit_function(x,y,function):
-    popt,pcov = curve_fit(function,x,y)
+def fit_function(x,y,function,**kwargs):
+    popt,pcov = curve_fit(function,x,y,**kwargs)
     return popt, np.sqrt(np.diag(pcov))
 
