@@ -4,7 +4,7 @@ import numpy as np
 def list_conditional(condition,listIn):
     return [l[condition] for l in listIn]
 
-def list_apply_fun(listIn,function):
+def list_apply_fun(function,listIn):
     return [function(l) for l in listIn]
 
 def list_append_list(list_1,list_2):
