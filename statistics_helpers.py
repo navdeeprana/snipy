@@ -1,5 +1,5 @@
-import sys
 import glob
+import numpy as np
 
 def ensemble_average(pattern,std=True,**kwargs):
     files = sorted(glob.glob(pattern))
