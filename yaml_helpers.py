@@ -1,15 +1,15 @@
 import ruamel_yaml as yaml
 
-def read_yaml(filename):
+def yaml_read(filename):
     with open(filename,'r') as f:
         data = yaml.load(f,Loader=yaml.Loader)
     return data
 
-def write_yaml(filename,data):
+def yaml_write(filename,data):
     with open(filename,'w') as f:
-        yaml.dump(data,f,default_flow_style=False,indent=True)
+        yaml.dump(data,f,default_flow_style=None,indent=True)
 
-def collate_yaml_keywords(data,keys):
+def yaml_collate_by_keywords(data,keys):
     collated = []
     for k in keys:
         values = []
