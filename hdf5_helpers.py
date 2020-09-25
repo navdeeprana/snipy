@@ -1,14 +1,14 @@
-import numpy as np
 import h5py
 
-def binary_to_hdf5(filename,n):
-    u,v = np.split(np.fromfile(filename,dtype=np.float64,count=2*n[0]*n[1]),2)
-    u = u.reshape(n[0],n[1])
-    v = v.reshape(n[0],n[1])
-    with h5py.File(filename+'.h5','w') as f:
-        f.create_dataset('x',data=u)
-        f.create_dataset('y',data=v)
+def read_dataset(fname,dset,return_numpy_array=False):
+    f = h5py.File(fname,'r')
+    if return_numpy_array:
+        # Return as numpy array, where all data is read from disk.
+        return f[dset][()]
+    else:
+        # Return as a dataset, I think it can load partial data.
+        return f[dset]
 
-filename = sys.argv[1]
-n        = int(sys.argv[2])
-binary_to_hdf5(filename,n)
+def write_dataset(fname,data,dset):
+    with h5py.File(fname,'w') as f:
+        f.create_dataset(dset,data=data)
