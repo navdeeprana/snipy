@@ -9,4 +9,7 @@ def ensemble_average(pattern,std=True,**kwargs):
     else:
         return data.mean(axis=0)
 
+def histogram(data,**kwargs):
+    h,e = np.histogram(data,**kwargs)
+    return 0.5e0*(e[1:]+e[:-1]), h
 
