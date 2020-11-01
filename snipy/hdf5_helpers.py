@@ -12,3 +12,37 @@ def read_dataset(fname,dset,return_numpy_array=False):
 def write_dataset(fname,data,dset):
     with h5py.File(fname,'w') as f:
         f.create_dataset(dset,data=data)
+
+def generate_xdmf(fname):
+    def xdmf_write(xdmf,string,level=0,width=2):
+        xdmf.write(string.rjust(len(string)+width*level,' ')+'\n')
+
+    f      = h5py.File(fname,'r')
+    dsets  = [key for key in f.keys()]
+    shapes = [f[d].shape for d in dsets]
+
+    print(dsets, shapes[0])
+
+    n    = shapes[0]
+    with open(fname.replace('.h5','.xdmf'),'w') as xdmf:
+        xdmf_write(xdmf,f'<?xml version="1.0" ?>')
+        xdmf_write(xdmf,f'<!DOCTYPE Xdmf SYSTEM "Xdmf.dtd" []>')
+        xdmf_write(xdmf,f'<Xdmf xmlns:xi="http://www.w3.org/2003/XInclude" Version="2.2">')
+        xdmf_write(xdmf,f'<Domain>',level=1)
+        xdmf_write(xdmf,f'<Grid Name="Vector" GridType="Uniform">',level=2)
+        xdmf_write(xdmf,f'<Topology TopologyType="3DCORECTMesh" NumberOfElements="{n[0]} {n[1]} {n[2]}" />',level=3)
+        xdmf_write(xdmf,f'<Geometry GeometryType="ORIGIN_DXDYDZ">',level=3)
+        xdmf_write(xdmf,f'<DataItem Name="origin" Dimensions="3" NumberType="Float" Precision="8" Format="XML"> 0.0 0.0 0.0 </DataItem>',level=4)
+        xdmf_write(xdmf,f'<DataItem Name="spacing" Dimensions="3" NumberType="Float" Precision="8" Format="XML"> 1.0 1.0 1.0 </DataItem>',level=4)
+        xdmf_write(xdmf,f'</Geometry>',level=3)
+        xdmf_write(xdmf,f'<Attribute Name="vectors" AttributeType="Vector" Center="Node">',level=3)
+        xdmf_write(xdmf,f'<DataItem ItemType="Function" Function="join($0, $1, $2)" Dimensions="{n[0]} {n[1]} {n[2]} 3">',level=4)
+
+        for dset in dsets:
+            xdmf_write(xdmf,f'<DataItem Dimensions="{n[0]*n[1]*n[2]}" NumberType="Float" Precision="8" Format="HDF"> {fname}:{dset} </DataItem>',level=5)
+
+        xdmf_write(xdmf,f'</DataItem>',level=4)
+        xdmf_write(xdmf,f'</Attribute>',level=3)
+        xdmf_write(xdmf,f'</Grid>',level=2)
+        xdmf_write(xdmf,f'</Domain>',level=1)
+        xdmf_write(xdmf,f'</Xdmf>')
