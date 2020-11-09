@@ -22,6 +22,9 @@ def no_ticks(ax,axis='both'):
 def default_colors():
     return plt.rcParams['axes.prop_cycle'].by_key()['color']
 
+def default_markers():
+    return ['o','s','^','D','*','<']
+
 def cmap_colors(n_colors,alpha = 1.0,cmap='viridis'):
     """
     Get colors from matplotlib colormap.
@@ -85,3 +88,7 @@ def search_rcParams(key):
     for name,value in plt.rcParams.items():
         if key in name:
             print(name,value)
+
+def figure_grid(nrow,ncol,figsize=(5.0,3.5)):
+    fig, grid = plt.subplots(nrow,ncol,figsize=(ncol*figsize[0],nrow*figsize[1]))
+    return fig, grid.reshape(-1)
