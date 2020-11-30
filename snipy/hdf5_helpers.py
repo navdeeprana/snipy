@@ -9,9 +9,10 @@ def read_dataset(fname,dset,return_numpy_array=False):
         # Return as a dataset, I think it can load partial data.
         return f[dset]
 
-def write_dataset(fname,data,dset):
+def write_dataset(fname,dsets,names):
     with h5py.File(fname,'w') as f:
-        f.create_dataset(dset,data=data)
+        for name, dset in zip(names,dsets):
+            f.create_dataset(name,data=dset)
 
 def generate_xdmf(fname):
     def xdmf_write(xdmf,string,level=0,width=2):
