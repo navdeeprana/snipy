@@ -7,13 +7,13 @@ def no_ticks(ax,axis='both'):
     ax   : matplotlib ax object.
     axis : "both", "x", "y"
     """
-    import numpy as np
+    from numpy import ndarray
     def set(ax):
         if axis=='both' or axis == 'x':
             ax.get_xaxis().set_visible(False)
         if axis=='both' or axis == 'y':
             ax.get_yaxis().set_visible(False)
-    if type(ax) == np.ndarray :
+    if type(ax) == ndarray :
         for axi in ax:
             set(axi)
     else:
@@ -91,4 +91,7 @@ def search_rcParams(key):
 
 def figure_grid(nrow,ncol,figsize=(5.0,3.5)):
     fig, grid = plt.subplots(nrow,ncol,figsize=(ncol*figsize[0],nrow*figsize[1]))
-    return fig, grid.reshape(-1)
+    if nrow*ncol > 1:
+        return fig, grid.reshape(-1)
+    else:
+        return fig, grid
