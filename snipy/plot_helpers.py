@@ -1,3 +1,4 @@
+import numpy as np
 import matplotlib
 from matplotlib import pyplot as plt
 
@@ -13,10 +14,10 @@ def no_ticks(ax,axis='both'):
             ax.get_xaxis().set_visible(False)
         if axis=='both' or axis == 'y':
             ax.get_yaxis().set_visible(False)
-    if type(ax) == ndarray :
+    try:
         for axi in ax:
             set(axi)
-    else:
+    except:
         set(ax)
 
 def default_colors():
@@ -90,8 +91,19 @@ def search_rcParams(key):
             print(name,value)
 
 def figure_grid(nrow,ncol,figsize=(5.0,3.5)):
-    fig, grid = plt.subplots(nrow,ncol,figsize=(ncol*figsize[0],nrow*figsize[1]))
+    figsize = (ncol*figsize[0],nrow*figsize[1])
+    fig, grid = plt.subplots(nrow,ncol,figsize=figsize)
     if nrow*ncol > 1:
         return fig, grid.reshape(-1)
     else:
         return fig, grid
+
+def figure_grid_with_colorbar(nrow,ncol,figsize=(5.0,3.5)):
+    from mpl_toolkits.axes_grid1 import AxesGrid
+    figsize=(ncol*figsize[0],nrow*figsize[1])
+    figsize=(1.06*figsize[0],figsize[1])
+    fig = plt.figure(figsize=figsize)
+    grid = AxesGrid(fig,111,nrows_ncols=(nrow,ncol),axes_pad=0.05,
+            cbar_mode='single',cbar_location='right',cbar_size='6%',cbar_pad=0.075)
+    return fig, grid, grid.cbar_axes[0]
+
