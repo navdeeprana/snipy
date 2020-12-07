@@ -13,3 +13,5 @@ def histogram(data,**kwargs):
     h,e = np.histogram(data,**kwargs)
     return 0.5e0*(e[1:]+e[:-1]), h
 
+def pdf_gaussian(x,mu,sigma):
+    return (1/(sigma*np.sqrt(2*np.pi)))*np.exp(-0.5e0*((x-mu)/sigma)**2)
