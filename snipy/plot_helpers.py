@@ -56,10 +56,6 @@ def ax_colorbar(fig,ax,im,contours=False):
     else:
         fig.colorbar(im,cax=cax,orientation='vertical') 
 
-    for t in cax.get_yticklabels():
-        t.set_horizontalalignment('right')
-        t.set_verticalalignment('center')
-        t.set_x(4)
     return cax
 
 def fig_colorbar(fig,cax,im,contours=False):
