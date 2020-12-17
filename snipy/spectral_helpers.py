@@ -3,11 +3,11 @@ import numpy as np
 def s2r_from_ek(k,ek,L=np.pi):
     """
     Given energy spectrum $E(k)$, compute second order structure function,
-    using the relation $S_2(r) = \int_0^{\infty} \left(1-\cos{kr}\right) E(k) \Delta k$
+    using the relation $S_2(r) = \int_0^{\infty} (1-\cos{kr}) E(k) \Delta k$
     """
     dk  = k[1]-k[0]
     r   = np.linspace(0,L,512)
-    s2r = np.asarray([4*np.sum((1-np.cos(k*ri)*ek*dk)) for ri in r])
+    s2r = np.asarray([4*np.sum((1-np.cos(k*ri))*ek*dk) for ri in r])
     return r, s2r
 
 def cr_from_ek(k,ek,L=np.pi):
