@@ -15,7 +15,7 @@ def write_dataset(fname,dsets,names):
         for name, dset in zip(names,dsets):
             f.create_dataset(name,data=dset)
 
-def generate_xdmf(fname):
+def generate_xdmf(fname,fout=None):
     def xdmf_write(xdmf,string,level=0,width=2):
         xdmf.write(string.rjust(len(string)+width*level,' ')+'\n')
 
@@ -27,7 +27,9 @@ def generate_xdmf(fname):
 
     n    = shapes[0]
     fnameabs = os.path.abspath(fname)
-    with open(fname.replace('.h5','.xdmf'),'w') as xdmf:
+    if not fout:
+        fout = fname.replace('.h5','.xdmf')
+    with open(fout,'w') as xdmf:
         xdmf_write(xdmf,f'<?xml version="1.0" ?>')
         xdmf_write(xdmf,f'<!DOCTYPE Xdmf SYSTEM "Xdmf.dtd" []>')
         xdmf_write(xdmf,f'<Xdmf xmlns:xi="http://www.w3.org/2003/XInclude" Version="2.2">')
