@@ -86,7 +86,7 @@ def search_rcParams(key):
         if key in name:
             print(name,value)
 
-def figure_grid(nrow,ncol,figsize=(5.0,3.5)):
+def figure_grid(nrow=1,ncol=1,figsize=(5.0,3.5)):
     figsize = (ncol*figsize[0],nrow*figsize[1])
     fig, grid = plt.subplots(nrow,ncol,figsize=figsize)
     if nrow*ncol > 1:
@@ -94,7 +94,7 @@ def figure_grid(nrow,ncol,figsize=(5.0,3.5)):
     else:
         return fig, grid
 
-def figure_grid_with_colorbar(nrow,ncol,figsize=(5.0,3.5)):
+def figure_grid_with_colorbar(nrow=1,ncol=1,figsize=(5.0,3.5)):
     from mpl_toolkits.axes_grid1 import AxesGrid
     figsize=(ncol*figsize[0],nrow*figsize[1])
     figsize=(1.06*figsize[0],figsize[1])
